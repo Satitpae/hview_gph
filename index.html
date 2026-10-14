@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HView • GPH Builder</title><style>*{box-sizing:border-box}body{margin:0;background:#f3f5f7;color:#172c3f;font-family:Tahoma,"Segoe UI",sans-serif;font-size:14px}header{height:76px;border-bottom:1px solid #dfe5ea;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 5vw}.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:#172c3f;font-size:21px;font-weight:700}.brand>span:last-child{font-size:14px;font-weight:400;color:#70808d;border-left:1px solid #dfe5ea;padding-left:12px}.logo{background:#123b47;color:#b8f36b;width:36px;height:36px;display:grid;place-items:center;border-radius:10px}.header-note,.eyebrow{font-size:10px;letter-spacing:1.5px;font-weight:700;color:#67818e}main{max-width:1600px;margin:auto;padding:36px 5vw}.intro{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:26px}h1{font-size:36px;line-height:1.5;margin:8px 0;font-weight:600;letter-spacing:-1px}h1 span{color:#67818e}.intro p{color:#67818e}.file-actions{display:flex;gap:10px;flex-wrap:wrap}button,.button{cursor:pointer;display:inline-flex;align-items:center;justify-content:center;min-height:40px;border:1px solid #ccd7dd;background:#fff;color:#18394b;padding:9px 14px;border-radius:7px;font:inherit;font-size:12px;text-decoration:none;transition:.15s}button:hover,.button:hover{background:#edf4f5;border-color:#6b9297}button:focus-visible,input:focus-visible,select:focus-visible,.button:focus-within{outline:3px solid #6eabb5;outline-offset:2px}.primary{background:#163e49;color:#fff;border-color:#163e49}.primary:hover{background:#245864}#status{background:#e7eef0;border-left:3px solid #557b86;padding:14px 17px;border-radius:4px;margin-bottom:22px;font-size:12px}#status.error{background:#fff0ea;border-color:#b15437;color:#8a331b}.workspace{display:grid;grid-template-columns:275px minmax(0,1fr);gap:22px}.panel{background:#fff;border:1px solid #dde5e9;border-radius:12px;padding:22px;box-shadow:0 3px 6px #112b3b03}.settings{align-self:start}.content{display:grid;gap:22px;min-width:0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.panel-head h2{font-size:17px;margin:0 0 5px}.panel-head>span{font-size:9px;color:#82909a;letter-spacing:1px}h3{font-size:12px;font-weight:700;margin:0 0 15px}label{display:block;font-size:11px;color:#647887;margin-bottom:13px}input:not([type=checkbox]):not([type=color]),select{display:block;width:100%;margin-top:7px;border:1px solid #d6e0e5;border-radius:5px;padding:10px;color:#1d3648;background:#fbfcfd;font:inherit;font-size:12px;min-width:0}input[type=checkbox]{accent-color:#285c66}.check{display:flex;align-items:center;gap:6px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.divider{border-top:1px solid #e7ecef;margin:19px 0}.wide{width:100%;margin-top:7px}.export-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.small{font-size:11px;line-height:1.8;color:#718390}.badge{background:#f1f5f7;border-radius:20px;padding:8px 12px;font-size:11px;white-space:nowrap}.metrics{display:grid;grid-template-columns:1fr 1fr 1.7fr;border-top:1px solid #edf0f2;border-bottom:1px solid #edf0f2;padding:16px 0;margin-bottom:12px}.metrics>div{padding-left:20px;border-left:1px solid #e5ebee}.metrics>div:first-child{padding-left:0;border:none}.metrics span{display:block;font-size:10px;color:#788a95}.metrics strong{display:block;font-size:26px;margin-top:8px;font-weight:500}#plot{position:relative}#chart{display:block;width:100%;height:auto;min-height:230px;touch-action:pan-y}#tooltip{position:absolute;pointer-events:none;background:#153742;color:#fff;padding:12px;border-radius:8px;font-size:11px;max-height:260px;overflow:hidden;box-shadow:0 8px 30px #0002;z-index:2;white-space:pre-line}.legend{display:flex;flex-wrap:wrap;gap:8px 16px;padding-top:10px}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#536c7a}.swatch{height:7px;width:14px;border-radius:2px}.table-scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:11px;text-align:left}th{font-size:10px;font-weight:500;color:#778a96;background:#f6f8f9;white-space:nowrap}th,td{padding:10px 8px;border-bottom:1px solid #edf0f2}td input:not([type=checkbox]):not([type=color]){margin:0;min-width:95px;padding:7px}td input.factor{min-width:65px!important;width:65px!important}input[type=color]{width:30px;height:30px;border:0;padding:1px;background:none;cursor:pointer}.remove{min-height:28px;padding:2px 8px;color:#9c635c}.mapped{color:#2b7f60;white-space:nowrap}.unmapped{color:#a4773e;white-space:nowrap}.data-scroll{max-height:340px}.help{margin-top:30px;border-top:1px solid #dce5e9;padding-top:22px;max-width:900px}.help h2{font-size:16px}.help p{font-size:12px;line-height:1.9;color:#667e8b}pre{background:#e7edf0;padding:16px;line-height:1.8;overflow:auto;border-radius:6px;font-size:12px}footer{border-top:1px solid #dce5e9;margin:10px 5vw 0;padding:25px 0;color:#6c838e;font-size:10px;letter-spacing:1px;display:flex;justify-content:space-between;gap:20px}footer span{letter-spacing:0}@media(max-width:1000px){main{padding:25px 3vw}.workspace{grid-template-columns:240px minmax(0,1fr)}.intro{align-items:flex-start;flex-direction:column}.panel{padding:16px}.header-note{display:none}}@media(max-width:740px){.workspace{display:flex;flex-direction:column}.settings{width:100%}.settings .divider{margin:14px 0}h1{font-size:29px}.metrics strong{font-size:20px}.metrics>div{padding-left:10px}.panel-head{flex-wrap:wrap}header{padding:0 4vw}.brand>span:last-child{font-size:12px}footer{flex-direction:column}.metrics{grid-template-columns:1fr 1fr 1.5fr}}
+[hidden]{display:none!important}.panel{min-width:0}.content{grid-template-columns:minmax(0,1fr)}.channels-panel .table-scroll{max-height:450px}
+.channel-tools{display:flex;flex-wrap:wrap;align-items:end;gap:8px;margin:18px 0}.channel-tools label{margin:0;flex:1;min-width:120px}.row-actions{display:flex;gap:4px}summary{cursor:pointer;font-weight:700;font-size:13px}.preview-section[open] summary{margin-bottom:18px}.chart-panel{margin-top:25px}.channels-panel .table-scroll{max-height:550px}
+</style></head><body>
+<header><a class="brand" href="./"><span class="logo">H</span> HView <span>GPH Builder</span></a><div class="header-note">CREATE · CONFIGURE · OPEN IN HVIEW</div></header>
+<main><section class="intro"><div><div class="eyebrow">HVIEW / GRAPH CONFIGURATION</div><h1>สร้างไฟล์กราฟ .gph<br><span>นำกลับไปใช้ใน HView</span></h1><p>เลือก Device และพารามิเตอร์ จัดช่องข้อมูล แล้วดาวน์โหลดไฟล์ได้ทันที</p></div><div class="file-actions"><button id="newGraph">+ กราฟใหม่</button><label class="button">เปิด .gph เดิม<input id="gphFile" type="file" accept=".gph" hidden></label><button id="saveGph" class="primary">ดาวน์โหลด .gph</button></div></section>
+<div id="status" role="status" aria-live="polite">พร้อมแก้ไข Total kW D0 • ไม่ต้องนำเข้าข้อมูลวัดเพื่อสร้าง GPH</div>
+<div class="workspace"><aside class="panel settings"><div class="panel-head"><h2>การตั้งค่า HView</h2><span>01 / SETUP</span></div>
+<label>ชื่อกราฟ<input id="name" type="text"></label><label>หน่วย<input id="units" type="text"></label><div class="divider"></div><h3>Advanced Setting / Type</h3><label>Type ที่จะใช้ใน HView<select id="graphType"><option value="datetime">Date/Time (Auto Scroll)</option><option value="bar">Bar Chart</option><option value="stack">Bar Chart (Stacks)</option><option value="original">คง Type จากไฟล์เดิม</option></select></label><p id="typeNote" class="small"></p><label class="button wide">โหลด GPH ต้นแบบของ Type นี้<input id="typeFile" type="file" accept=".gph" hidden></label><div class="divider"></div><h3>สเกลแกน Y</h3><label class="check"><input id="auto" type="checkbox"> ปรับสเกลอัตโนมัติ</label><div class="two"><label>Min<input id="min" type="number"></label><label>Max<input id="max" type="number"></label></div><label>Major / ระยะเส้นกริด<input id="major" type="number" min="0.000001"></label>
+<div class="divider"></div><h3>ตัวเลือกของ HView</h3><label class="check"><input id="IsFileLog" type="checkbox"> Record to file</label><label class="check"><input id="IsDotLine" type="checkbox"> Dot Line</label><label class="check"><input id="AutoUpdate" type="checkbox"> Auto Update</label><label class="check"><input id="IsSameScale" type="checkbox"> ใช้สเกลร่วมกัน</label><p class="small">ตัวเลือกเหล่านี้บันทึกลง GPH ค่าขั้นสูงอื่นคงไว้จากไฟล์ต้นแบบ</p>
+<div class="divider"></div><h3>บันทึกงาน</h3><button id="saveProject" class="wide">บันทึกโปรเจกต์ JSON</button><label class="button wide">เปิดโปรเจกต์ JSON<input id="projectFile" type="file" accept=".json" hidden></label><p class="small">ไฟล์ทั้งหมดประมวลผลในเบราว์เซอร์ ไม่มีการส่งไปยังเซิร์ฟเวอร์</p></aside>
+<div class="content"><section class="panel channels-panel"><div class="panel-head"><div><h2>Device และพารามิเตอร์ของกราฟ</h2><span id="slotCount" class="small">32 / 32 ช่อง</span></div><button id="addChannel">+ เพิ่มช่อง</button></div>
+<p class="small">Source = ชื่อ Device ใน HView · Group = กลุ่มพารามิเตอร์ · Value = ชื่อพารามิเตอร์<br>รายการแนะนำมาจากไฟล์ GPH ที่มีอยู่ และไฟล์ที่คุณเปิดเพิ่ม สามารถพิมพ์ชื่ออื่นได้ตามการตั้งค่า HView</p>
+<div class="channel-tools"><button id="allOn">เปิดทุกช่อง</button><button id="allOff">ปิดทุกช่อง</button><label>Group ทุกช่องที่เปิด<input id="batchGroup" placeholder="เช่น Basic"></label><label>Value ทุกช่องที่เปิด<input id="batchValue" placeholder="เช่น kW Total"></label><button id="batchApply">ใช้กับช่องที่เปิด</button></div>
+<div class="table-scroll"><table><thead><tr><th>แสดง</th><th>สี</th><th>Source / Device</th><th>Group</th><th>Value / Parameter</th><th>Label</th><th>Factor</th><th>ชื่ออ้างอิง</th><th>จัดช่อง</th></tr></thead><tbody id="channels"></tbody></table></div><p class="small">↑ ↓ จัดลำดับ · ⧉ ทำสำเนา · × ลบช่อง · GPH ส่งออกครบ 32 slot โดยปิด slot ที่ไม่ได้ใช้งาน</p></section>
+<details class="panel preview-section"><summary>ดูตัวอย่างกราฟ (ไม่จำเป็นต่อการสร้าง GPH)</summary><p class="small">ใช้ตรวจสีและสเกลเท่านั้น ค่าแสดงจริงมาจาก Device เมื่อเปิดไฟล์ใน HView รูปแบบวาดบนเว็บไม่เปลี่ยนชนิดกราฟใน GPH</p><div class="file-actions"><button id="demo">ลองข้อมูลตัวอย่าง</button><label class="button">นำเข้า CSV<input id="csvFile" type="file" accept=".csv,.tsv,.txt" hidden></label><button id="sampleCsv">ดาวน์โหลด CSV ตัวอย่าง</button></div>
+<div class="two"><label>รูปแบบตัวอย่าง<select id="mode"><option value="line">กราฟเส้น</option><option value="area">พื้นที่ใต้เส้น</option><option value="bar">กราฟแท่ง</option></select></label><div></div></div><div class="two"><label>เริ่มต้น (UTC+7)<input id="start" type="datetime-local" step="1"></label><label>สิ้นสุด (UTC+7)<input id="end" type="datetime-local" step="1"></label></div><button id="resetRange">ดูข้อมูลทั้งหมด</button>
+<section class="chart-panel"><div class="panel-head"><div><span class="eyebrow">PREVIEW</span><h2 id="chartTitle">Total kW D0</h2></div><span id="dataBadge" class="badge">ตัวอย่างการจัดกราฟ</span></div><div class="metrics"><div><span>ช่องที่แสดง</span><strong id="channelCount">16</strong></div><div><span>จุดข้อมูลในช่วง</span><strong id="rowCount">0</strong></div><div><span>ค่าสูงสุด</span><strong id="peak">—</strong></div></div><div id="plot"><svg id="chart" role="img" aria-label="ตัวอย่างกราฟ" viewBox="0 0 1000 420"></svg><div id="tooltip" hidden></div></div><div id="legend" class="legend"></div><div class="export-grid"><button id="saveSvg">ภาพ SVG</button><button id="savePng">ภาพ PNG</button><button id="saveCsv">ส่งออก CSV</button></div></section><div class="table-scroll data-scroll"><table id="dataTable"></table></div><p id="tableNote" class="small"></p></details>
+</div></div>
+<section class="help"><h2>จากเว็บกลับไป HView</h2><p>1. สร้างกราฟใหม่หรือเปิด .gph เดิม → 2. เลือกชื่อ Device, Group และ Value ให้ตรงกับ HView → 3. ตั้งสเกล สี ป้ายชื่อและตัวคูณ → 4. ดาวน์โหลด .gph แล้วเปิดผ่าน File → Open ใน HView</p><p>เว็บนี้เป็นตัวสร้างการตั้งค่ากราฟ HView ยังคงสื่อสารกับอุปกรณ์และอ่านข้อมูลตามระบบเดิม รายการแนะนำไม่ได้ยืนยันว่า Device ออนไลน์หรือมีพารามิเตอร์นั้นจริงในเครื่องที่ใช้งาน</p></section>
+</main><footer>HVIEW GPH BUILDER <span>สร้างไฟล์ตั้งค่ากราฟจากโครงสร้าง GPH ของ HView</span></footer><script>window.DEFAULT_GPH = "[Header]\r\nFileType=1\r\n[GraphInfo]\r\nGraphName=Total kW D0\r\nIsFileLog=1\r\nIsSplitTime=0\r\nSplitTime=48\r\nIsSplitSize=0\r\nSplitSize=1440\r\nIsSameScale=1\r\nScaleMin=0\r\nScaleMax=8000\r\nScaleMajor=800\r\nIsDotLine=0\r\nScaleCode=9\r\nScaleUser=00:00:00\r\nScaleUserDay=0\r\nScalingStyle=0\r\nIsRightScale=0\r\nRightMin=0\r\nRightMax=0\r\nRightMajor=1\r\nRightUnits=\r\nIsMinor=0\r\nNumMinor=0\r\nTableViewInterval=2\r\nTableViewRows=64\r\nSetPerRow=1\r\nFormViewFit=0\r\nFormViewFile=\r\nFormOffsetX=0\r\nFormOffsetY=0\r\nUnits=\r\nIdentifier=\r\nAutoUpdate=1\r\nXScaleType=0\r\nXScaleMin=0\r\nXScaleMax=0\r\nXScaleMajor=0\r\nXUnits=\r\nIsBar=0\r\nIsLine=0\r\nStartMode=0\r\nIsAutoYScale=0\r\nIsPie3D=0\r\nIsPieSideLayout=0\r\n[Bar1]\r\nVisible=1\r\nSource=TR1\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=01kW Total\r\nAutoColor=1\r\nr=128\r\ng=0\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar2]\r\nVisible=1\r\nSource=TR2\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=02kW Total\r\nAutoColor=1\r\nr=0\r\ng=128\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar3]\r\nVisible=1\r\nSource=TR3\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=03kW Total\r\nAutoColor=1\r\nr=0\r\ng=0\r\nb=255\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar4]\r\nVisible=1\r\nSource=TR4\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=04kW Total\r\nAutoColor=1\r\nr=255\r\ng=0\r\nb=255\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar5]\r\nVisible=1\r\nSource=TR5\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=05kW Total\r\nAutoColor=1\r\nr=0\r\ng=255\r\nb=255\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar6]\r\nVisible=1\r\nSource=TR6\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=06kW Total\r\nAutoColor=1\r\nr=128\r\ng=0\r\nb=128\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar7]\r\nVisible=1\r\nSource=TR7\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=07kW Total\r\nAutoColor=1\r\nr=128\r\ng=0\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar8]\r\nVisible=1\r\nSource=TR8\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=08kW Total\r\nAutoColor=1\r\nr=0\r\ng=128\r\nb=128\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar9]\r\nVisible=1\r\nSource=TR9\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=09kW Total\r\nAutoColor=1\r\nr=255\r\ng=0\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar10]\r\nVisible=1\r\nSource=TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=0AkW Total\r\nAutoColor=1\r\nr=0\r\ng=255\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar11]\r\nVisible=1\r\nSource=VCB\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=0BkW Total\r\nAutoColor=1\r\nr=255\r\ng=255\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar12]\r\nVisible=1\r\nSource=Wet_Scrubber_BH\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=0CkW Total\r\nAutoColor=1\r\nr=128\r\ng=128\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar13]\r\nVisible=1\r\nSource=NH3_Compressor8_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=0DkW Total\r\nAutoColor=1\r\nr=192\r\ng=192\r\nb=192\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar14]\r\nVisible=1\r\nSource=NH3_Compressor3_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=0EkW Total\r\nAutoColor=1\r\nr=128\r\ng=128\r\nb=128\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar15]\r\nVisible=1\r\nSource=CO2_Plant4_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=0FkW Total\r\nAutoColor=1\r\nr=255\r\ng=255\r\nb=192\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar16]\r\nVisible=1\r\nSource=Brewhouse3_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=D10kW Total\r\nAutoColor=1\r\nr=192\r\ng=192\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar17]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=D11kW Total\r\nAutoColor=1\r\nr=128\r\ng=0\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar18]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=0\r\ng=128\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar19]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=0\r\ng=0\r\nb=255\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar20]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=255\r\ng=0\r\nb=255\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar21]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=0\r\ng=255\r\nb=255\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar22]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=128\r\ng=0\r\nb=128\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar23]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=128\r\ng=0\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar24]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=0\r\ng=128\r\nb=128\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar25]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=255\r\ng=0\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar26]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=0\r\ng=255\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar27]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=255\r\ng=255\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar28]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=128\r\ng=128\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar29]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=192\r\ng=192\r\nb=192\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar30]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=kW Total\r\nAutoColor=1\r\nr=128\r\ng=128\r\nb=128\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar31]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=\r\nAutoColor=1\r\nr=255\r\ng=255\r\nb=192\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n[Bar32]\r\nVisible=0\r\nSource=Air_Comp_No1_TR10\r\nGroup=Basic\r\nValue=kW Total\r\nLabel=\r\nAutoColor=1\r\nr=192\r\ng=192\r\nb=0\r\nFactor=1\r\nUnsignedAverage=0\r\nScalingStyle=0\r\nXOffset=\r\nNumExtra=0\r\n";
+</script><script>window.DEVICE_CATALOG = {
+  "TR1": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR2": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR7": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR9": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "VCB": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Wet_Scrubber_BH": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "NH3_Compressor8_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "NH3_Compressor3_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "CO2_Plant4_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Brewhouse3_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Comp_No1_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Comp_No2_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "CO2_Plant5_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Cooling_Tower_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "SPARE1_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "SPARE2_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "SPARE3_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "SPARE4_TR10": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "NH3_No7_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Filter_No2_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TFF_No2_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "SEPARATOR_No2_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Condenser_No8-9-10_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Tank_Farm_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Filter_No1_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Con_Silo_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Milling_Machine_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "LAB_MOOR_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Brewhouse_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Malt_Silo_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Yeast_Plant_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Canal_Pump_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Wet_Scrubber_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Cooling_Plant_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Comp_No4_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Co2_Plant3_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Dryer_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "SPARE1_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Comp_No5_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Comp_No3_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "NH3_Comp1_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "NH3_Comp2_TR4": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Main_AOP": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Gas_Station": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "BEER_CAN": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "SODA_WATER": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Office_BP7": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Main_Spot_Colling": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Warehouse": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "NH3_Comp_No4_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "NH3_Comp_No5_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "NH3_Comp_No6_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "MainPowerMCC52.12_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "BH2_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "MCC52.14_Pump_NH3_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TF_Separator_No1_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TF_Separator_No2_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Comp_No3_VSD_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "(None)": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "CO2_Plant2_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Main_Air_Dryer_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "BH_Air_Comp_No1_TR5": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Wellpump_No1_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Wellpump_No4_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Lighting_BP6_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Microbrew_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Steam_Generator_MCB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "6RT_DB1_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Boiler_Plant_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Bottle3_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Bottle4_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Filler_Rinser4_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "LoadCenter_TR8_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_BP10_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Filler_Rinser3_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "MainPower_Schenk_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Conveyor2_3_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "BP10_lighting_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "WellPump_NO2_3_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Line3_4_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Main_Tankfarm4_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Charger_Station_TR9": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "MainSoft3_TR1": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "WaterTreatmet_TR1": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Positive_FillingRoom_TR1": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "ControlRoom_Beer6_TR2": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "ControlRoom_Beer1_2_TR2": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Venlitation_Beer3_4_TR2": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "MainCleanRoom_TR2": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TankFarm_No3_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "YeastPlant2_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "KegRoom_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "CoolingRoomKeg_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "LC_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Microbrew_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Millstar_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "FillerMicrobrew_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "GylcolChiller_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "FillingRoom_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Brewing_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Facility_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "MobilePump_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Ventilation_MB_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "RO_Plant_TR1": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "FacilityLine1_2_6_TR1": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Line6_TR2": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Line1_2_TR2": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "WareResource_TR1": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Soft_Water_No4_TR2": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "TR11": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Feeder1_TR11": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Feeder2_TR11": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Com_110kW_TR11": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "DB1_Soda_Line3_TR11": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "DB_Water_19Litre_TR11": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Feeder6_TR11": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Soda_Line2_TR11": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Chiller_Soda_Line3_TR11": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Waste_Water_Treatment": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "House": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Town_Water_TR7": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Deep_Well5_TR7": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Deep_Well6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Charger_Forklift_TR9": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Bottle_Warehouse": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Office_Warehouse": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "DeepWell_Pump_No3_TR8": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Air_Compressor_No6_TR3": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Boiler_No3_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Boiler_No4_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Boiler_No5_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "Boiler_No6_TR6": {
+    "Basic": [
+      "kW Total"
+    ]
+  },
+  "SolarCell_TR9": {
+    "Basic": [
+      "kW Total"
+    ]
+  }
+};
+</script><script>// Only profiles confirmed from files saved by HView are included.
+window.TYPE_PROFILES = {
+  datetime: {XScaleType:'0'},
+  bar: {XScaleType:'3'},
+  stack: {XScaleType:'4'}
+};
+</script><script>(function (root) {
+  'use strict';
+  function ini(text) {
+    const result = Object.create(null); let section;
+    for (const line of text.replace(/^\uFEFF/, '').split(/\r?\n/)) {
+      const s = line.trim();
+      if (!s || /^[;#]/.test(s)) continue;
+      if (/^\[.*\]$/.test(s)) { section = s.slice(1, -1); result[section] = Object.create(null); }
+      else if (section && line.includes('=')) {
+        const i = line.indexOf('='); result[section][line.slice(0, i).trim()] = line.slice(i + 1).trim();
+      }
+    }
+    if (!result.GraphInfo) throw Error('ไม่พบ GraphInfo ในไฟล์ GPH');
+    return result;
+  }
+  const num = (v, fallback) => v !== '' && v != null && Number.isFinite(Number(v)) ? Number(v) : fallback;
+  function fromGph(text) {
+    const template = ini(text), g = template.GraphInfo;
+    const channels = Object.keys(template).filter(k => /^Bar\d+$/.test(k)).sort((a,b) => Number(a.slice(3))-Number(b.slice(3))).map(k => {
+      const c = template[k];
+      const color = '#' + ['r','g','b'].map(x => Math.max(0,Math.min(255,num(c[x],0))).toString(16).padStart(2,'0')).join('');
+      return {source:c.Source ?? '',group:c.Group ?? 'Basic',value:c.Value ?? 'kW Total',label:c.Label ?? '',visible:c.Visible==='1',color,factor:num(c.Factor,1),raw:{...c}};
+    });
+    if (!channels.length || channels.length > 32) throw Error('ไฟล์ต้องมี 1–32 ช่องข้อมูล');
+    return {name:g.GraphName || 'Graph',min:num(g.ScaleMin,0),max:num(g.ScaleMax,8000),major:num(g.ScaleMajor,800),auto:g.IsAutoYScale==='1',units:g.Units ?? '',mode:'line',channels,template};
+  }
+  function validate(config) {
+    if (!Array.isArray(config.channels) || !config.channels.length || config.channels.length > 32) throw Error('ต้องมี 1–32 ช่องข้อมูล');
+    if (![config.min,config.max,config.major].every(Number.isFinite) || config.max <= config.min || config.major <= 0) throw Error('สเกลไม่ถูกต้อง: Max ต้องมากกว่า Min และ Major ต้องมากกว่า 0');
+    if ((config.max-config.min)/config.major > 200) throw Error('ช่วงสเกลละเอียดเกินไป (ไม่เกิน 200 เส้น)');
+    for (const c of config.channels) {
+      if (!Number.isFinite(c.factor) || !/^#[0-9a-f]{6}$/i.test(c.color)) throw Error('ตัวคูณหรือสีไม่ถูกต้อง');
+      for (const v of [c.source,c.group,c.value,c.label]) if (typeof v !== 'string' || /[\r\n]/.test(v)) throw Error('ชื่อช่องข้อมูลต้องเป็นข้อความบรรทัดเดียว');
+    }
+    if (typeof config.name !== 'string' || typeof config.units !== 'string' || /[\r\n]/.test(config.name+config.units)) throw Error('ชื่อกราฟหรือหน่วยไม่ถูกต้อง');
+    return config;
+  }
+  function toGph(config) {
+    validate(config);
+    const t = JSON.parse(JSON.stringify(config.template));
+    Object.assign(t.GraphInfo,{GraphName:config.name,ScaleMin:config.min,ScaleMax:config.max,ScaleMajor:config.major,IsAutoYScale:Number(config.auto),Units:config.units});
+    const fallback = t.Bar1;
+    Object.keys(t).filter(k=>/^Bar\d+$/.test(k)).forEach(k=>delete t[k]);
+    config.channels.forEach((c,i)=>{
+      const original = c.raw || config.template['Bar'+(i+1)] || fallback;
+      t['Bar'+(i+1)]={...original,Visible:Number(c.visible),Source:c.source,Group:c.group,Value:c.value,Label:c.label,Factor:c.factor,
+        r:parseInt(c.color.slice(1,3),16),g:parseInt(c.color.slice(3,5),16),b:parseInt(c.color.slice(5,7),16)};
+    });
+    for(let i=config.channels.length+1;i<=32;i++)t['Bar'+i]={...(config.template['Bar'+i]||fallback),Visible:0};
+    return Object.entries(t).map(([s,v])=>'['+s+']\r\n'+Object.entries(v).map(([k,v])=>k+'='+v).join('\r\n')).join('\r\n')+'\r\n';
+  }
+  function csvCells(text) {
+    const first = text.split(/\r?\n/)[0];
+    const delimiter = first.includes('\t') ? '\t' : first.split(';').length > first.split(',').length ? ';' : ',';
+    const rows=[]; let row=[],cell='',quoted=false;
+    text=text.replace(/^\uFEFF/,'');
+    for(let i=0;i<text.length;i++) {
+      const c=text[i];
+      if(c==='"') {if(quoted && text[i+1]==='"'){cell+='"';i++;}else if(quoted){quoted=false;}else if(cell===''){quoted=true;}else throw Error('เครื่องหมาย quote ใน CSV ไม่ถูกต้อง');}
+      else if(!quoted && c===delimiter){row.push(cell);cell='';}
+      else if(!quoted && (c==='\n'||c==='\r')){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(v=>v.trim()))rows.push(row);row=[];cell='';}
+      else cell+=c;
+    }
+    if(quoted)throw Error('CSV มี quote ที่ยังไม่ปิด');
+    row.push(cell);if(row.some(v=>v.trim()))rows.push(row);
+    return rows;
+  }
+  function timestamp(s) {
+    s=s.trim();let m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})[ T](\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+    if(m) s=`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}T${m[4].padStart(2,'0')}:${m[5]}:${m[6]||'00'}+07:00`;
+    else if(/^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/.test(s)) {s=s.replace(' ','T');if(!/(Z|[+-]\d{2}:\d{2})$/i.test(s))s+='+07:00';}
+    else throw Error('เวลาใช้ YYYY-MM-DD HH:mm:ss หรือ DD/MM/YYYY HH:mm:ss');
+    const parts=s.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?/);
+    if(!parts)throw Error('เวลาไม่ถูกต้อง');
+    const [,yr,mo,day,hr,minute,sec='0']=parts.map((v,i)=>i?Number(v):v);
+    const check=new Date(Date.UTC(yr,mo-1,day));
+    if(check.getUTCFullYear()!==yr||check.getUTCMonth()!==mo-1||check.getUTCDate()!==day||hr>23||minute>59||sec>59)throw Error('วันที่หรือเวลาไม่ถูกต้อง: '+s);
+    const t=Date.parse(s);if(!Number.isFinite(t))throw Error('เวลาไม่ถูกต้อง: '+s);return t;
+  }
+  function fromCsv(text) {
+    const rows=csvCells(text);if(rows.length<2)throw Error('CSV ต้องมีหัวตารางและข้อมูลอย่างน้อย 1 แถว');
+    const headers=rows.shift().map(x=>x.trim());
+    if(headers.length<2 || headers.some(x=>!x) || new Set(headers).size!==headers.length)throw Error('หัวตารางต้องไม่ว่างและไม่ซ้ำ');
+    const data=rows.map((r,i)=>{
+      if(r.length!==headers.length)throw Error(`แถว ${i+2}: จำนวนคอลัมน์ไม่ตรงกับหัวตาราง`);
+      const t=timestamp(r[0]);const values=Object.create(null);
+      headers.slice(1).forEach((h,j)=>{const s=r[j+1].trim();if(!s || /^(N\/A|NA|null)$/i.test(s))values[h]=null;
+        else {const v=Number(s.replace(/,/g,''));if(!Number.isFinite(v))throw Error(`แถว ${i+2}: ${h} ไม่ใช่ตัวเลข`);values[h]=v;}});
+      return {t,values};
+    }).sort((a,b)=>a.t-b.t);
+    return {headers:headers.slice(1),rows:data};
+  }
+  function key(c,headers) { return headers.includes(`${c.source}!${c.group}!${c.value}`) ? `${c.source}!${c.group}!${c.value}` : c.source; }
+  function quote(v){return '"'+String(v).replace(/"/g,'""')+'"';}
+  root.HViewCore={ini,fromGph,toGph,fromCsv,csvCells,timestamp,validate,key,quote};
+  if(typeof module!=='undefined')module.exports=root.HViewCore;
+})(typeof globalThis!=='undefined'?globalThis:this);
+</script><script>'use strict';
+const C=HViewCore, $=id=>document.getElementById(id);
+let config=C.fromGph(window.DEFAULT_GPH), data={headers:[],rows:[]}, demoMode=false, shown=[], bounds;
+let catalog=window.DEVICE_CATALOG||{};
+let typeProfiles=window.TYPE_PROFILES||{}, selectedType='datetime';
+// Saved HView reference files differ only in XScaleType (3 = bar, 4 = stacks).
+const typeKeys=['XScaleType'];
+function detectType(){selectedType=Object.keys(typeProfiles).find(k=>typeKeys.every(field=>String(config.template.GraphInfo[field]??'0')===String(typeProfiles[k][field]??'0')))||'original';$('graphType').value=selectedType;typeNote();}
+function typeNote(){const available=selectedType==='original'||!!typeProfiles[selectedType];$('typeNote').textContent=available?'Type นี้จะบันทึกลง GPH โดยตรง':'ต้องโหลด GPH ต้นแบบที่ HView บันทึกด้วย Type นี้ก่อน เพื่อยืนยันค่าไฟล์';}
+function applyType(){if(selectedType==='original')return;const profile=typeProfiles[selectedType];if(!profile)throw Error('ยังไม่มีต้นแบบของ Type นี้ กรุณาโหลด GPH ที่บันทึกจาก HView');Object.assign(config.template.GraphInfo,profile);}
+const ns='http://www.w3.org/2000/svg';
+function status(message,error=false){$('status').textContent=message;$('status').classList.toggle('error',error);}
+function safely(fn){return async function(...args){try{await fn(...args);}catch(e){status(e.message,true);}};}
+function download(name,content,type){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function safeName(){return config.name.replace(/[<>:"/\\|?*]/g,'_')||'Graph';}
+function el(tag,text){const n=document.createElement(tag);if(text!=null)n.textContent=text;return n;}
+function svg(tag,attrs,text){const n=document.createElementNS(ns,tag);for(const [k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!=null)n.textContent=text;return n;}
+function fieldValues(){for(const k of ['name','units','mode'])$(k).value=config[k];for(const k of ['min','max','major'])$(k).value=config[k];$('auto').checked=config.auto;for(const key of ['IsFileLog','IsDotLine','AutoUpdate','IsSameScale'])$(key).checked=config.template.GraphInfo[key]==='1';detectType();}
+function readFields(){const next={...config,name:$('name').value,units:$('units').value,mode:$('mode').value,auto:$('auto').checked,min:Number($('min').value),max:Number($('max').value),major:Number($('major').value)};for(const k of ['min','max','major'])if(!$(k).value.trim())throw Error('กรุณาระบุ Min, Max และ Major');C.validate(next);config=next;for(const key of ['IsFileLog','IsDotLine','AutoUpdate','IsSameScale'])config.template.GraphInfo[key]=String(Number($(key).checked));}
+function learnCatalog(cfg){for(const c of cfg.channels){if(!c.source||!c.group||!c.value)continue;catalog[c.source]??={};catalog[c.source][c.group]??=[];if(!catalog[c.source][c.group].includes(c.value))catalog[c.source][c.group].push(c.value);}}
+function suggestions(key,c){return key==='source'?Object.keys(catalog).sort():key==='group'?Object.keys(catalog[c.source]||{}):catalog[c.source]?.[c.group]||[];}
+function channelTable(){
+  $('channels').replaceChildren();
+  config.channels.forEach((c,i)=>{
+    const row=el('tr');
+    const cell=(n)=>{const td=el('td');td.append(n);row.append(td);};
+    const toggle=el('input');toggle.type='checkbox';toggle.checked=c.visible;toggle.setAttribute('aria-label','แสดงช่อง '+(i+1));toggle.onchange=()=>{c.visible=toggle.checked;render();};cell(toggle);
+    const color=el('input');color.type='color';color.value=c.color;color.setAttribute('aria-label','สีช่อง '+(i+1));color.oninput=()=>{c.color=color.value;c.raw={...(c.raw||config.template.Bar1),AutoColor:'0'};render();};cell(color);
+    for(const key of ['source','group','value','label','factor']){
+      const input=el('input');input.type=key==='factor'?'number':'text';if(key==='factor'){input.step='any';input.className='factor';}input.value=c[key];input.setAttribute('aria-label',key+' ช่อง '+(i+1));
+      let list;
+      if(['source','group','value'].includes(key)){list=el('datalist');list.id='choices-'+key+'-'+i;suggestions(key,c).forEach(v=>{const opt=el('option');opt.value=v;list.append(opt);});input.setAttribute('list',list.id);input.title='เลือกจากรายการ หรือพิมพ์ชื่อที่ตรงกับ HView';}
+      input.onchange=safely(()=>{const v=key==='factor'?Number(input.value):input.value;if(key==='factor'&&(!input.value.trim()||!Number.isFinite(v))){input.value=c.factor;throw Error('Factor ต้องเป็นตัวเลข');}c[key]=v;if(key==='source'||key==='group')channelTable();render();});cell(input);if(list)input.parentElement.append(list);
+    }
+    const map=el('span');map.id='map'+i;cell(map);
+    const actions=el('div');actions.className='row-actions';for(const [text,title,fn]of [
+      ['↑','เลื่อนขึ้น',()=>{if(i>0)[config.channels[i-1],config.channels[i]]=[c,config.channels[i-1]];}],
+      ['↓','เลื่อนลง',()=>{if(i<config.channels.length-1)[config.channels[i+1],config.channels[i]]=[c,config.channels[i+1]];}],
+      ['⧉','ทำสำเนา',()=>{if(config.channels.length>=32)throw Error('เพิ่มได้สูงสุด 32 ช่อง');config.channels.splice(i+1,0,JSON.parse(JSON.stringify(c)));}],
+      ['×','ลบ',()=>{if(config.channels.length===1)throw Error('ต้องเหลืออย่างน้อย 1 ช่อง');config.channels.splice(i,1);}]
+    ]){const b=el('button',text);b.className='remove';b.setAttribute('aria-label',title+'ช่อง '+(i+1));b.onclick=safely(()=>{fn();channelTable();render();});actions.append(b);}cell(actions);
+    $('channels').append(row);
+  });
+}
+function value(row,c){const v=row.values[C.key(c,data.headers)];return v==null?null:v*c.factor;}
+function localInput(t){return new Date(t+7*3600000).toISOString().slice(0,19);}
+function timeLabel(t,full=false){return new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',...(full?{day:'2-digit',month:'2-digit',year:'numeric'}:{}),hour:'2-digit',minute:'2-digit',hour12:false}).format(t);}
+function filtered(){const start=$('start').value?C.timestamp($('start').value): -Infinity;const end=$('end').value?C.timestamp($('end').value):Infinity;if(end<start)throw Error('เวลาสิ้นสุดต้องไม่น้อยกว่าเวลาเริ่มต้น');return data.rows.filter(r=>r.t>=start&&r.t<=end);}
+function render(){
+  shown=filtered();const active=config.channels.filter(c=>c.visible);
+  $('chartTitle').textContent=config.name;$('channelCount').textContent=active.length;$('rowCount').textContent=shown.length.toLocaleString();
+  $('dataBadge').textContent=demoMode?'ข้อมูลจำลอง':data.rows.length?'ข้อมูล CSV':'ตัวอย่างการจัดกราฟ';
+  config.channels.forEach((c,i)=>{const n=$('map'+i);if(n){const known=catalog[c.source]?.[c.group]?.includes(c.value);n.className=known?'mapped':'unmapped';n.textContent=known?'พบใน GPH':'ระบุเอง';}});
+  $('slotCount').textContent=config.channels.length+' / 32 ช่อง';
+  const values=shown.flatMap(r=>active.map(c=>value(r,c))).filter(v=>v!=null&&Number.isFinite(v));
+  const peak=values.length?values.reduce((a,b)=>Math.max(a,b),-Infinity):null;
+  $('peak').textContent=peak==null?'—':peak.toLocaleString('en-US',{maximumFractionDigits:2})+' '+config.units;
+  $('legend').replaceChildren();active.forEach(c=>{const span=el('span');const mark=el('i');mark.className='swatch';mark.style.background=c.color;span.append(mark,document.createTextNode(c.source+(c.label?' · '+c.label:'')));$('legend').append(span);});
+  draw(active,values);dataTable(active);
+}
+function draw(active,values){
+  const chart=$('chart');chart.replaceChildren();$('tooltip').hidden=true;
+  chart.append(svg('rect',{width:1000,height:420,fill:'#ffffff'}));
+  const left=70,right=974,top=26,bottom=360;
+  let min=config.min,max=config.max,major=config.major;
+  if(config.auto&&values.length){min=Math.min(0,values.reduce((a,b)=>Math.min(a,b),Infinity));max=values.reduce((a,b)=>Math.max(a,b),-Infinity);if(max<=min)max=min+1;const span=max-min;min-=span*0.04;max+=span*0.08;major=(max-min)/8;}
+  const t0=shown.length?shown[0].t:0,t1=shown.length?shown[shown.length-1].t:1;
+  const x=t=>left+(t-t0)/Math.max(1,t1-t0)*(right-left),y=v=>bottom-(v-min)/(max-min)*(bottom-top);
+  bounds={left,right,top,bottom,t0,t1};
+  chart.append(svg('text',{x:left,y:14,fill:'#6d8492','font-size':11},config.units));
+  for(let v=min,n=0;v<=max+major*0.00001&&n<=200;v+=major,n++){
+    const yp=y(v);chart.append(svg('line',{x1:left,x2:right,y1:yp,y2:yp,stroke:'#e7edf0','stroke-dasharray':'3 4'}));
+    chart.append(svg('text',{x:left-12,y:yp+4,'text-anchor':'end',fill:'#6c8391','font-size':11},v.toLocaleString('en-US',{maximumFractionDigits:2})));
+  }
+  for(let i=0;i<=6;i++){
+    const xp=left+i*(right-left)/6;chart.append(svg('line',{x1:xp,x2:xp,y1:top,y2:bottom,stroke:'#f1f4f6'}));
+    if(shown.length)chart.append(svg('text',{x:xp,y:bottom+26,'text-anchor':'middle',fill:'#6c8391','font-size':11},timeLabel(t0+(t1-t0)*i/6)));
+  }
+  if(shown.length)chart.append(svg('text',{x:left,y:bottom+48,fill:'#7d909b','font-size':10},timeLabel(t0,true)+' — '+timeLabel(t1,true)+' · UTC+7'));
+  if(!shown.length){chart.append(svg('text',{x:520,y:180,'text-anchor':'middle',fill:'#738b98','font-size':18},data.rows.length?'ไม่มีข้อมูลในช่วงเวลานี้':'ตั้งค่าช่องข้อมูล แล้วดาวน์โหลด .gph ได้ทันที'));chart.append(svg('text',{x:520,y:211,'text-anchor':'middle',fill:'#9aabb4','font-size':12},'HView จะอ่านค่าจริงจาก Device เมื่อเปิดไฟล์นี้'));return;}
+  const defs=svg('defs',{}),clip=svg('clipPath',{id:'plotClip'});clip.append(svg('rect',{x:left,y:top,width:right-left,height:bottom-top}));defs.append(clip);chart.append(defs);
+  const group=svg('g',{'clip-path':'url(#plotClip)'});chart.append(group);
+  // Limit rendered marks only; all source records remain in the table/export.
+  const stride=Math.max(1,Math.ceil(shown.length/(config.mode==='bar'?350:3000)));
+  active.forEach((c,ci)=>{
+    const segments=[];let segment=[];
+    shown.forEach((r,ri)=>{const v=value(r,c);if(v==null||!Number.isFinite(v)){if(segment.length)segments.push(segment);segment=[];return;}if(ri%stride!==0&&ri!==shown.length-1)return;segment.push([x(r.t),y(v)]);});if(segment.length)segments.push(segment);
+    if(config.mode==='bar'){
+      const slot=(right-left)/Math.max(1,Math.min(shown.length,350)),width=Math.max(0.7,slot*0.75/Math.max(active.length,1));
+      shown.forEach((r,i)=>{if(i%stride)return;const v=value(r,c);if(v==null)return;const baseline=Math.max(top,Math.min(bottom,y(0))),yp=y(v);group.append(svg('rect',{x:x(r.t)+(ci-active.length/2)*width,y:Math.min(yp,baseline),width,height:Math.max(1,Math.abs(yp-baseline)),fill:c.color,opacity:0.85}));});
+    }else for(const points of segments){
+      const d=points.map(([xp,yp],i)=>(i?'L':'M')+xp.toFixed(2)+' '+yp.toFixed(2)).join(' ');
+      if(config.mode==='area'&&points.length>1){const base=Math.max(top,Math.min(bottom,y(0)));group.append(svg('path',{d:d+` L ${points[points.length-1][0]} ${base} L ${points[0][0]} ${base} Z`,fill:c.color,opacity:0.1}));}
+      group.append(svg('path',{d,stroke:c.color,'stroke-width':1.8,fill:'none'}));
+      if(points.length===1)group.append(svg('circle',{cx:points[0][0],cy:points[0][1],r:3,fill:c.color}));
+    }
+  });
+  const cursor=svg('line',{id:'cursor',x1:left,x2:left,y1:top,y2:bottom,stroke:'#446b79','stroke-dasharray':'3 3',visibility:'hidden'});chart.append(cursor);
+  chart.append(svg('text',{x:right,y:14,'text-anchor':'end',fill:'#8296a1','font-size':10},(demoMode?'SIMULATED DATA · ':'')+(stride>1?'แสดงทุก '+stride+' จุด · ':'')+config.mode.toUpperCase()));
+}
+function dataTable(active){
+  const table=$('dataTable');table.replaceChildren();const head=el('thead'),hr=el('tr');hr.append(el('th','เวลา (UTC+7)'));active.forEach(c=>hr.append(el('th',c.source+' × '+c.factor)));head.append(hr);table.append(head);const body=el('tbody');
+  shown.slice(0,200).forEach(r=>{const tr=el('tr');tr.append(el('td',timeLabel(r.t,true)));active.forEach(c=>{const v=value(r,c);tr.append(el('td',v==null?'—':v.toLocaleString('en-US',{maximumFractionDigits:3})));});body.append(tr);});table.append(body);
+  $('tableNote').textContent='แสดง '+Math.min(200,shown.length)+' จาก '+shown.length+' แถว • ส่งออก CSV ได้ทุกแถวในช่วงเวลาที่เลือก';
+}
+$('chart').addEventListener('pointermove',e=>{
+  if(!shown.length||!bounds)return;const rect=$('chart').getBoundingClientRect();const sx=(e.clientX-rect.left)/rect.width*1000;
+  if(sx<bounds.left||sx>bounds.right){$('tooltip').hidden=true;return;}
+  const target=bounds.t0+(sx-bounds.left)/(bounds.right-bounds.left)*(bounds.t1-bounds.t0);let lo=0,hi=shown.length-1;while(lo<hi){const mid=Math.floor((lo+hi)/2);if(shown[mid].t<target)lo=mid+1;else hi=mid;}
+  if(lo>0&&Math.abs(shown[lo-1].t-target)<Math.abs(shown[lo].t-target))lo--;const row=shown[lo];
+  $('tooltip').textContent=timeLabel(row.t,true)+'\n'+config.channels.filter(c=>c.visible).map(c=>{const v=value(row,c);return c.source+': '+(v==null?'—':v.toLocaleString('en-US',{maximumFractionDigits:2}))+' '+config.units;}).join('\n');
+  $('tooltip').hidden=false;const w=$('tooltip').offsetWidth;$('tooltip').style.left=Math.max(0,Math.min(rect.width-w,e.clientX-rect.left+15))+'px';$('tooltip').style.top='28px';
+  const cursor=$('cursor');if(cursor){const xp=bounds.left+(row.t-bounds.t0)/Math.max(1,bounds.t1-bounds.t0)*(bounds.right-bounds.left);cursor.setAttribute('x1',xp);cursor.setAttribute('x2',xp);cursor.setAttribute('visibility','visible');}
+});
+$('chart').addEventListener('pointerleave',()=>{$('tooltip').hidden=true;$('cursor')?.setAttribute('visibility','hidden');});
+for(const k of ['name','units','mode','min','max','major','auto','IsFileLog','IsDotLine','AutoUpdate','IsSameScale'])$(k).addEventListener('change',safely(()=>{readFields();render();status('อัปเดตการตั้งค่ากราฟแล้ว');}));
+for(const k of ['start','end'])$(k).addEventListener('change',safely(()=>render()));
+$('resetRange').onclick=()=>{$('start').value='';$('end').value='';render();};
+async function textFile(file){if(!file)throw Error('ยังไม่ได้เลือกไฟล์');if(file.size>30*1024*1024)throw Error('ไฟล์ต้องมีขนาดไม่เกิน 30 MB');const bytes=await file.arrayBuffer();let text=new TextDecoder('utf-8',{fatal:false}).decode(bytes);if(text.includes('\uFFFD'))text=new TextDecoder('windows-874').decode(bytes);return text;}
+function onFile(id,fn){$(id).onchange=safely(async e=>{const file=e.target.files[0];if(!file)return;try{await fn(await textFile(file),file.name);}finally{e.target.value='';}});}
+onFile('gphFile',(text,name)=>{const next=C.fromGph(text);C.validate(next);config=next;learnCatalog(config);fieldValues();channelTable();render();status('เปิด '+name+' แล้ว • แก้การตั้งค่าและดาวน์โหลดเพื่อนำกลับไปใช้ใน HView');});
+onFile('csvFile',(text,name)=>{const next=C.fromCsv(text);data=next;demoMode=false;$('start').value='';$('end').value='';render();const matched=config.channels.filter(c=>data.headers.includes(C.key(c,data.headers))).length;status('นำเข้า '+name+' · '+data.rows.length+' แถว · จับคู่ได้ '+matched+' ช่อง');});
+onFile('projectFile',text=>{
+  const p=JSON.parse(text);if(p.version!==1)throw Error('เวอร์ชันโปรเจกต์ไม่รองรับ');C.validate(p.config);if(!p.config.template?.GraphInfo)throw Error('โปรเจกต์ขาด GPH template');
+  if(!Array.isArray(p.data?.headers)||!p.data.headers.every(h=>typeof h==='string')||!Array.isArray(p.data?.rows)||p.data.rows.some(r=>!Number.isFinite(r.t)||!r.values||Object.values(r.values).some(v=>v!==null&&!Number.isFinite(v))))throw Error('ข้อมูลโปรเจกต์ไม่ถูกต้อง');
+  config=p.config;data=p.data;data.rows.sort((a,b)=>a.t-b.t);demoMode=!!p.demoMode;if(p.typeProfiles&&typeof p.typeProfiles==='object')for(const [key,profile]of Object.entries(p.typeProfiles)){if(['datetime','bar','stack'].includes(key)&&typeKeys.every(field=>/^\d+$/.test(String(profile?.[field]??''))))typeProfiles[key]=profile;}$('start').value='';$('end').value='';fieldValues();channelTable();render();status('เปิดโปรเจกต์แล้ว');
+});
+$('addChannel').onclick=safely(()=>{if(config.channels.length>=32)throw Error('เพิ่มได้สูงสุด 32 ช่อง');config.channels.push({source:'New_Source',group:'Basic',value:'kW Total',label:'',factor:1,color:'#328a93',visible:true});channelTable();render();});
+$('demo').onclick=()=>{
+  data.headers=[...new Set(config.channels.map(c=>c.source))];const base=C.timestamp('2025-12-01 00:00:00');data.rows=Array.from({length:97},(_,i)=>({t:base+i*15*60000,values:Object.fromEntries(data.headers.map((s,j)=>[s,Math.round((j===10?5100:210+j*43)+(j===10?650:95)*Math.sin(i/9+j)+55*Math.cos(i/4+j))]))}));
+  demoMode=true;$('start').value='';$('end').value='';render();status('กำลังแสดงข้อมูลจำลอง 24 ชั่วโมง • ไม่ใช่ข้อมูลวัดจริงจาก HView');
+};
+$('saveGph').onclick=safely(()=>{readFields();applyType();const text=C.toGph(config);if(/[^\x00-\x7F]/.test(text))throw Error('ส่งออก GPH สำหรับ HView รุ่นเก่า: กรุณาใช้ชื่อและป้ายภาษาอังกฤษ (ASCII) เพื่อหลีกเลี่ยง encoding ผิด');download(safeName()+'.gph',text,'text/plain');status('ดาวน์โหลด GPH แล้ว • Type ตาม Advanced Setting จะใช้ใน HView');});
+$('saveProject').onclick=safely(()=>{readFields();applyType();download(safeName()+'.json',JSON.stringify({version:1,config,data,demoMode,typeProfiles},null,2),'application/json');status('บันทึกโปรเจกต์พร้อมข้อมูลแล้ว');});
+function chartSvg(){const clone=$('chart').cloneNode(true);clone.setAttribute('xmlns',ns);clone.setAttribute('width','1200');clone.setAttribute('height','600');clone.setAttribute('viewBox','0 -80 1000 500');clone.querySelector('#cursor')?.remove();clone.prepend(svg('rect',{x:0,y:-80,width:1000,height:500,fill:'#fff'}),svg('text',{x:70,y:-48,'font-family':'Tahoma, sans-serif','font-size':23,fill:'#172c3f'},config.name),svg('text',{x:70,y:-22,'font-size':11,fill:'#647887'},(demoMode?'ข้อมูลจำลอง · ':'')+config.channels.filter(c=>c.visible).map(c=>c.source).join(' · ')));return new XMLSerializer().serializeToString(clone);}
+$('saveSvg').onclick=safely(()=>{readFields();render();download(safeName()+'.svg',chartSvg(),'image/svg+xml');});
+$('savePng').onclick=safely(async()=>{readFields();render();const url=URL.createObjectURL(new Blob([chartSvg()],{type:'image/svg+xml'}));try{const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(Error('แปลงภาพไม่สำเร็จ'));img.src=url;});const canvas=document.createElement('canvas');canvas.width=2400;canvas.height=1200;canvas.getContext('2d').drawImage(img,0,0,2400,1200);const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));if(!blob)throw Error('แปลง PNG ไม่สำเร็จ');download(safeName()+'.png',blob,'image/png');}finally{URL.revokeObjectURL(url);}});
+$('saveCsv').onclick=safely(()=>{readFields();shown=filtered();const active=config.channels.filter(c=>c.visible);const lines=[['timestamp',...active.map(c=>c.source+'!'+c.group+'!'+c.value+' [factor='+c.factor+']')].map(C.quote).join(',')];shown.forEach(r=>lines.push([localInput(r.t)+'+07:00',...active.map(c=>value(r,c)??'')].map(C.quote).join(',')));download(safeName()+'.csv','\uFEFF'+lines.join('\r\n'),'text/csv;charset=utf-8');});
+$('sampleCsv').onclick=()=>download('sample.csv','timestamp,TR1,TR2\r\n2025-12-01 00:00:00,1250,980\r\n2025-12-01 00:15:00,1280,1010\r\n2025-12-01 00:30:00,1310,995\r\n','text/csv');
+function refresh(){fieldValues();channelTable();render();}
+$('graphType').onchange=safely(()=>{selectedType=$('graphType').value;typeNote();if(typeProfiles[selectedType]){applyType();status('เลือก Type: '+$('graphType').selectedOptions[0].textContent);}else if(selectedType==='original')status('คงค่า Type ที่อยู่ในไฟล์');});
+onFile('typeFile',(text,name)=>{if(selectedType==='original')throw Error('เลือก Type ที่ต้องการกำหนดต้นแบบก่อน');const g=C.ini(text).GraphInfo;if(!/^\d+$/.test(g.XScaleType||''))throw Error('ต้นแบบไม่มี XScaleType ที่ถูกต้อง');const profile=Object.fromEntries(typeKeys.map(k=>[k,g[k]??'0']));if(!Object.values(profile).every(v=>/^\d+$/.test(v)))throw Error('ต้นแบบมีค่าชนิดกราฟไม่ถูกต้อง');typeProfiles[selectedType]=profile;applyType();typeNote();status('โหลดต้นแบบ '+name+' สำหรับ '+$('graphType').selectedOptions[0].textContent+' แล้ว');});
+$('newGraph').onclick=()=>{config=C.fromGph(window.DEFAULT_GPH);config.name='New Graph';config.channels=[{...config.channels[0],label:'kW Total'}];data={headers:[],rows:[]};demoMode=false;$('start').value='';$('end').value='';refresh();status('สร้างกราฟใหม่แล้ว • ระบุ Device / Group / Value ให้ตรงกับ HView');};
+$('allOn').onclick=()=>{config.channels.forEach(c=>c.visible=true);channelTable();render();};
+$('allOff').onclick=()=>{config.channels.forEach(c=>c.visible=false);channelTable();render();};
+$('batchApply').onclick=safely(()=>{const group=$('batchGroup').value.trim(),param=$('batchValue').value.trim();if(!group&&!param)throw Error('ระบุ Group หรือ Value ที่ต้องการเปลี่ยน');config.channels.filter(c=>c.visible).forEach(c=>{if(group)c.group=group;if(param)c.value=param;});channelTable();render();status('เปลี่ยนพารามิเตอร์ของช่องที่เปิดแสดงแล้ว');});
+learnCatalog(config);refresh();
+</script></body></html>
+
