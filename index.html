@@ -3,6 +3,7 @@
 [hidden]{display:none!important}.panel{min-width:0}.content{grid-template-columns:minmax(0,1fr)}.channels-panel .table-scroll{max-height:450px}
 .channel-tools{display:flex;flex-wrap:wrap;align-items:end;gap:8px;margin:18px 0}.channel-tools label{margin:0;flex:1;min-width:120px}.row-actions{display:flex;gap:4px}summary{cursor:pointer;font-weight:700;font-size:13px}.preview-section[open] summary{margin-bottom:18px}.chart-panel{margin-top:25px}.channels-panel .table-scroll{max-height:550px}
 .header-actions{display:flex;align-items:center;gap:18px}#themeToggle{white-space:nowrap}html{color-scheme:light}html[data-theme=dark]{color-scheme:dark}html[data-theme=dark] body{background:#101923;color:#e2edf5}html[data-theme=dark] header,html[data-theme=dark] .panel{background:#192633;border-color:#334554}html[data-theme=dark] .brand{color:#e2edf5}html[data-theme=dark] .brand>span:last-child,html[data-theme=dark] .small,html[data-theme=dark] label,html[data-theme=dark] .help p,html[data-theme=dark] .intro p,html[data-theme=dark] h1 span,html[data-theme=dark] .header-note,html[data-theme=dark] .eyebrow,html[data-theme=dark] .metrics span,html[data-theme=dark] footer{color:#a6b9c8}html[data-theme=dark] button,html[data-theme=dark] .button{background:#243645;color:#e2edf5;border-color:#455d6f}html[data-theme=dark] button:hover,html[data-theme=dark] .button:hover{background:#304858}html[data-theme=dark] .primary{background:#397784;border-color:#397784}html[data-theme=dark] input:not([type=checkbox]):not([type=color]),html[data-theme=dark] select{background:#12202d;color:#e2edf5;border-color:#3c5264}html[data-theme=dark] th{background:#223441;color:#b6cad9}html[data-theme=dark] td,html[data-theme=dark] .divider,html[data-theme=dark] .help,html[data-theme=dark] footer,html[data-theme=dark] .metrics,html[data-theme=dark] .metrics>div{border-color:#334554}html[data-theme=dark] #status{background:#233d48;color:#d3e7ee;border-color:#70acb8}html[data-theme=dark] #status.error{background:#4c2c2a;color:#ffcfc2;border-color:#d48c74}html[data-theme=dark] .badge,html[data-theme=dark] pre{background:#243645;color:#c4d9e6}html[data-theme=dark] .mapped{color:#86d6ad}html[data-theme=dark] .unmapped{color:#e3ba7d}html[data-theme=dark] .remove{color:#efb3a7}html[data-theme=dark] .legend span{color:#bccfda}html[data-theme=dark] #chart{border-radius:8px}html[data-theme=dark] #chart>rect{fill:#142331}html[data-theme=dark] #chart text{fill:#a9bfce}html[data-theme=dark] #chart>line{stroke:#334a5b}html[data-theme=dark] #chart #cursor{stroke:#b6d6e4}@media(max-width:740px){.brand{gap:7px;font-size:17px}.brand>span:last-child{padding-left:7px;font-size:10px}#themeToggle{padding:8px;font-size:11px}.header-actions{gap:8px}}
+td select{margin:0;min-width:150px;padding:7px}input[readonly]{opacity:.8}select:disabled{opacity:.5}
 </style></head><body>
 <header><a class="brand" href="./"><span class="logo">H</span> HView <span>GPH Builder</span></a><div class="header-actions"><div class="header-note">CREATE · CONFIGURE · OPEN IN HVIEW</div><button id="themeToggle" type="button" aria-label="สลับ Dark Mode" aria-pressed="false">☾ Dark Mode</button></div></header>
 <main><section class="intro"><div><div class="eyebrow">HVIEW / GRAPH CONFIGURATION</div><h1>สร้างไฟล์กราฟ .gph<br><span>นำกลับไปใช้ใน HView</span></h1><p>เลือก Device และพารามิเตอร์ จัดช่องข้อมูล แล้วดาวน์โหลดไฟล์ได้ทันที</p></div><div class="file-actions"><button id="newGraph">+ กราฟใหม่</button><label class="button">เปิด .gph เดิม<input id="gphFile" type="file" accept=".gph" hidden></label><button id="saveGph" class="primary">ดาวน์โหลด .gph</button></div></section>
@@ -826,6 +827,10 @@ const C=HViewCore, $=id=>document.getElementById(id);
 function blankGraph(){const cfg=C.fromGph(window.DEFAULT_GPH);cfg.name='New Graph';cfg.channels.forEach(c=>{Object.assign(c,{source:'',group:'',value:'',label:'',factor:'',visible:false});Object.assign(c.raw,{Source:'',Group:'',Value:'',Label:'',Visible:'0',Factor:'1'});});return cfg;}
 let config=blankGraph(), data={headers:[],rows:[]}, demoMode=false, shown=[], bounds;
 let catalog=window.DEVICE_CATALOG||{};
+const PARAMETERS={
+  Basic:['Voltage L1','Voltage L2','Voltage L3','Current L1','Current L2','Current L3','kW Total','kvar Total','kVA Total','PF','kWh','THD Voltage L1','THD Voltage L2','THD Voltage L3','THD Current L1','THD Current L2','THD Current L3','Hz','kW L1','kW L2','kW L3','PF L1','PF L2','PF L3','N/A','Period Demand'],
+  CalcValue:['PeriodDem','Sync.AccDem','Sync.SubAccDem','RTMaxV','RTMinV','RTAvgV','RTMaxI','RTMinI','RTAvgI','PeriodDemKVA','Sync.AccDemKVA','Sync.SubAccDemKVA','TotalKWH','Sync.PredictKW','Sync.PredictKVA']
+};
 let typeProfiles=window.TYPE_PROFILES||{}, selectedType='datetime';
 // Saved HView reference files differ only in XScaleType (3 = bar, 4 = stacks).
 const typeKeys=['XScaleType'];
@@ -850,12 +855,24 @@ function suggestions(key,c){return key==='source'?Object.keys(catalog).sort():ke
 function channelTable(){
   $('channels').replaceChildren();
   config.channels.forEach((c,i)=>{
+    c.label=c.value;
     const row=el('tr');
     const cell=(n)=>{const td=el('td');td.append(n);row.append(td);};
     const toggle=el('input');toggle.type='checkbox';toggle.checked=c.visible;toggle.setAttribute('aria-label','แสดงช่อง '+(i+1));toggle.onchange=()=>{c.visible=toggle.checked;render();};cell(toggle);
     const color=el('input');color.type='color';color.value=c.color;color.setAttribute('aria-label','สีช่อง '+(i+1));color.oninput=()=>{c.color=color.value;c.raw={...(c.raw||config.template.Bar1),AutoColor:'0'};render();};cell(color);
     for(const key of ['source','group','value','label','factor']){
+      if(key==='group'||key==='value'){
+        const select=el('select');select.setAttribute('aria-label',key+' ช่อง '+(i+1));
+        const blank=el('option',key==='group'?'เลือก Group':'เลือก Parameter');blank.value='';select.append(blank);
+        const choices=key==='group'?Object.keys(PARAMETERS):PARAMETERS[c.group]||[];
+        for(const v of choices){const option=el('option',v);option.value=v;select.append(option);}
+        if(c[key]&&!choices.includes(c[key])){const original=el('option',c[key]+' (จากไฟล์เดิม)');original.value=c[key];select.append(original);}
+        select.value=c[key];if(key==='value'&&!c.group)select.disabled=true;
+        select.onchange=()=>{c[key]=select.value;if(key==='group'){c.value='';c.label='';}else c.label=c.value;channelTable();render();};
+        cell(select);continue;
+      }
       const input=el('input');input.type=key==='factor'?'number':'text';if(key==='factor'){input.step='any';input.className='factor';}input.value=c[key];input.setAttribute('aria-label',key+' ช่อง '+(i+1));
+      if(key==='label'){input.readOnly=true;input.title='Label ตาม Value / Parameter อัตโนมัติ';}
       let list;
       if(['source','group','value'].includes(key)){list=el('datalist');list.id='choices-'+key+'-'+i;suggestions(key,c).forEach(v=>{const opt=el('option');opt.value=v;list.append(opt);});input.setAttribute('list',list.id);input.title='เลือกจากรายการ หรือพิมพ์ชื่อที่ตรงกับ HView';}
       input.onchange=safely(()=>{const v=key==='factor'?(input.value.trim()===''?'':Number(input.value)):input.value;if(key==='factor'&&v!==''&&!Number.isFinite(v)){input.value=c.factor;throw Error('Factor ต้องเป็นตัวเลข');}c[key]=v;if(key==='source'||key==='group')channelTable();render();});cell(input);if(list)input.parentElement.append(list);
